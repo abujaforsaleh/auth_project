@@ -1,0 +1,1 @@
+ /Volumes/AndroidStudioProjects/provider/auth_project/.dart_tool/flutter_build/d50a4296fa467b5adaf119da00e87d35/native_assets.yaml: 

@@ -19,16 +19,16 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthProvider(),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
 
+        theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
+        debugShowCheckedModeBanner: false,
         routes: {
           '/': (context)=> SplashScreen(),
           '/login_page': (context)=> LoginScreen(),
           '/home_page': (context)=> HomeScreen(),
-
         },
         initialRoute: '/',
       ),
