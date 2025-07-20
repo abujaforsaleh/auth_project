@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class AuthProvider extends ChangeNotifier{
-  bool _isLogIn = false;
+  bool _isLoading = false;
 
-  bool get isLogIn =>_isLogIn;
+  bool get isLoading => _isLoading;
 
-  logOut(){
-    _isLogIn = false;
+  Future<void> login (String email, String password)async{
+    _isLoading = true;
     notifyListeners();
-  }
-  logIn(){
-    _isLogIn = true;
+
+    await Future.delayed(Duration(seconds: 2));
+
+    debugPrint("login with email: $email, password: $password");
+
+    _isLoading = false;
     notifyListeners();
   }
 

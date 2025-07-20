@@ -19,10 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         actions: [
           IconButton(onPressed: (){
-            context.read<AuthProvider>().logOut();
-            Future.delayed(Duration(seconds: 2), (){
-              Navigator.pushReplacementNamed(context, '/login_page');//for checking the status change
-            });
+            //context.read<AuthProvider>().logOut();
+            Navigator.pushReplacementNamed(context, '/login_page');
 
           }, icon: Icon(Icons.logout)),
         ],
@@ -32,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text("Welcome User You Are Logged In"),
-            Text('Status: ${context.watch<AuthProvider>().isLogIn}'),
+            //Text('Status: ${context.watch<AuthProvider>().isLogIn}'),
           ],
         ),
       ),

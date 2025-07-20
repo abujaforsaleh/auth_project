@@ -1,5 +1,7 @@
 import 'package:auth_project/provider/auth_provider.dart';
+import 'package:auth_project/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,8 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(text: "example@gmail.com");
+  final _passwordController = TextEditingController(text: "123456");
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -21,91 +23,53 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void _submitLogin() {
+    if (_formKey.currentState!.validate()) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+      Provider.of<AuthProvider>(context, listen: false).login(email, password);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login Page"),
       ),
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //email
-                Text("Email"),
-                SizedBox(
-                  height: 5,
-                ),
-                TextFormField(
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              customTextfield(
                   controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: "example@email.com",
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter email";
-                    }
-                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                      return "Email not valid";
-                    }
-                    return null;
-                  },
-                ),
-
-                //password
-                SizedBox(
-                  height: 25,
-                ),
-                Text("Password"),
-                SizedBox(
-                  height: 5,
-                ),
-                TextFormField(
+                  inputType: TextInputType.emailAddress,
+                  labelText: "Email",
+                  validatorValue: "Enter email address"),
+              SizedBox(
+                height: 16,
+              ),
+              customTextfield(
                   controller: _passwordController,
-                  decoration: InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Icon(Icons.lock),
-                      border: OutlineInputBorder()),
-                  keyboardType: TextInputType.visiblePassword,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Password can't be empty";
-                    }
-                    if (value.length < 6) {
-                      return "Length can't be less than 6";
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<AuthProvider>().logIn();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("You are Logged in Successfully")));
-                        Navigator.pushReplacementNamed(context, '/home_page');
-                      }
-                    },
-                    child: Text("Login"),
-                  ),
-                ),
-              ],
-            ),
+                  inputType: TextInputType.visiblePassword,
+                  labelText: "Password",
+                  validatorValue: "Enter a Password"),
+              SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(
+                onPressed: authProvider.isLoading ? null : _submitLogin,
+                child: authProvider.isLoading
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Text("Login"),
+              ),
+            ],
           ),
         ),
       ),
