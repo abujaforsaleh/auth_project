@@ -1,4 +1,5 @@
 import 'package:auth_project/provider/auth_provider.dart';
+import 'package:auth_project/screens/registration_screen.dart';
 import 'package:auth_project/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,6 +70,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     : Text("Login"),
               ),
+              // Inside Column after the login button
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register_page');
+                },
+                child: const Text("Don't have an account? Register here"),
+              ),
+
             ],
           ),
         ),

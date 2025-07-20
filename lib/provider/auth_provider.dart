@@ -17,4 +17,16 @@ class AuthProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> register(String email, String password)async{
+    _isLoading = true;
+    notifyListeners();
+
+    await Future.delayed(Duration(seconds: 2));
+    debugPrint("Registering with email: $email, password: $password");
+
+    _isLoading = false;
+    notifyListeners();
+
+  }
+
 }

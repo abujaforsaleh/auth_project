@@ -1,6 +1,7 @@
 import 'package:auth_project/provider/auth_provider.dart';
 import 'package:auth_project/screens/home_screen.dart';
 import 'package:auth_project/screens/login_screen.dart';
+import 'package:auth_project/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login_page': (context)=> LoginScreen(),
           '/home_page': (context)=> HomeScreen(),
+          '/register_page': (context)=> RegistrationScreen()
         },
         initialRoute: '/login_page',
       ),
