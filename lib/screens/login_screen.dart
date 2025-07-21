@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     : Text("Login"),
               ),
-              // Inside Column after the login button
+     
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register_page');
